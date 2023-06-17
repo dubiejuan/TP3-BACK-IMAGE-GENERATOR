@@ -14,4 +14,4 @@ const deleteObjectToS3 = async ({ imageData }) => {
 const getObjectToS3 = async ({ type, sector }) => {
 };
 
-module.exports = { putObjectToS3, getObjectToS3, deleteObjectToS3, moveObject };
+module.exports = { putObjectToS3, getObjectToS3, deleteObjectToS3 };

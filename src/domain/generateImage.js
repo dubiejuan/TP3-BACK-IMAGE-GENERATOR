@@ -1,21 +1,28 @@
 
-const { generateImage } = require('../infra/gpt')
+const gpt = require('../infra/gpt')
 const { generateUUID } = require('../libs/generateUUID')
-const { createTemporaryImage } = require('../infra/imageDB')
-const { } = require('../infra/S3')
+const { createTemporaryImage,getTemporaryImages } = require('../infra/imageDB')
+const {putObjectToS3 } = require('../infra/S3')
 
-const generateImage = async ({ imagePrompt }) => {
+const generateImage = async ({ imagePrompt,userId }) => {
 
-  const image = await generateImage({ imagePrompt, userId })
+  let image = await gpt.generateImage({ imagePrompt })
 
   const imageGenerated = {
     id: generateUUID(),
     url: "",
-    orginal: true,
+    original: true,
     userId,
+    imagePrompt,
     b64: image[0].b64_json
   }
 
+  newImage = await putObjectToS3({image:imageGenerated,operationType:'temporary'})
 
-  createTemporaryImage(imageGenerated)
+  createTemporaryImage(newImage)
+  
+  return getTemporaryImages({userId:newImage.userId})
 }
+
+
+module.exports = {generateImage}

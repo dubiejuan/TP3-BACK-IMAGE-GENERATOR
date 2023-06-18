@@ -1,6 +1,9 @@
 const assert = require('assert');
 const createError = require('http-errors');
-
+const {generateImage} = require('../../domain/generateImage');
+const {saveImage} = require('../../domain/saveImage');
+const {getAllImage} = require('../../domain/getImages');
+const {generateNewVariant} = require('../../domain/generateVariant');
 /**
  * @api {get} /:userId
  * @apiGroup  image
@@ -24,7 +27,7 @@ const createError = require('http-errors');
 const getImagesController = async (req, res, next) => {
   try {
     const userId = req.userId;
-    const result = await getImages({ userId });
+    const result = await getAllImage({ userId });
     res.status(200).json(result);
   } catch (error) {
     next(error);
@@ -57,8 +60,8 @@ const generateImageController = async (req, res, next) => {
   try {
     assert(req.body?.imagePrompt, createError.BadRequest(`Missing prompt in body`));
 
-    const result = await generateImage({ imagePrompt });
-
+    const result = await generateImage({ imagePrompt:req.body.imagePrompt,userId:req.userId });
+    
     res.status(200).json(result);
   } catch (error) {
     next(error);
@@ -73,10 +76,7 @@ const generateImageController = async (req, res, next) => {
  * @apiVersion 1.0.0
  * @apiHeader {String} authorization Authorization token
  * @apiBody  {
- * "url":" "www.image.com",
  * "id":" "1231231",
- * "imagePrompt":" "a image",
- * "original": true ,
  * }
  * @apiSuccessExample {json} 201:Created
  * {}
@@ -88,15 +88,10 @@ const generateImageController = async (req, res, next) => {
 
 const saveImageController = async (req, res, next) => {
   try {
-    assert(req.body?.imagePrompt, createError.BadRequest(`Missing prompt in body`));
-    assert(req.body?.url, createError.BadRequest(`Missing url in body`));
     assert(req.body?.id, createError.BadRequest(`Missing id in body`));
-    assert(req.body?.original, createError.BadRequest(`Missing original in body`));
-
-    const imageData = req.body
-
-    const result = await saveImage({ imageData });
-    res.status(200).json(result);
+    const userId = req.userId;
+    await saveImage({ id:req.body?.id , userId });
+    res.status(200).json({});
   } catch (error) {
     next(error);
   }
@@ -105,7 +100,7 @@ const saveImageController = async (req, res, next) => {
 
 
 /**
- * @api {post} /variante/:id
+ * @api {post} /variante
  * @apiGroup  image
  * @apiVersion 1.0.0
  * @apiHeader {String} authorization Authorization token
@@ -126,9 +121,9 @@ const saveImageController = async (req, res, next) => {
 const variantImageController = async (req, res, next) => {
   try {
 
-    assert(req.params.id, createError.BadRequest(`Missing id in params`));
+    assert(req.body.id, createError.BadRequest(`Missing id in params`));
 
-    const result = await saveImage({ id: req.params.id });
+    const result = await generateNewVariant({ id: req.body.id });
     res.status(200).json(result);
   } catch (error) {
     next(error);

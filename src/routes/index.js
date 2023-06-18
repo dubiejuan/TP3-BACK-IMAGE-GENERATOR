@@ -5,7 +5,7 @@ const healthRouter = require('./health');
 
 const bindRoutes = (app) => {
   app.use('/api/health', healthRouter);
-  app.use('/api/image', signInRouter);
+  app.use('/api/image', imageRouter);
   app.use('*', notFoundRouter);
 };
 

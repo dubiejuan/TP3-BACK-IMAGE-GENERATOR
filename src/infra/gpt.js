@@ -1,26 +1,33 @@
-const { Configuration, OpenAIApi } = require("openai");
+require('dotenv').config()
 
+const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
   organization: process.env.ORG,
-  apiKey: process.env.APYKEY
+  apiKey: process.env.API_KEY
 });
 
 const openai = new OpenAIApi(configuration);
 
 
-const generateImage = async ({ prompt }) => {
+const generateImage = async ({ imagePrompt }) => {
 
-  const createImageRequest = {
-    "prompt": prompt,
-    "n": 1,
-    "size": "256x256",
-    "response_format": "b64_json"
+  try {
+    const createImageRequest = {
+      "prompt": imagePrompt,
+      "n": 1,
+      "size": "256x256",
+      "response_format": "b64_json"
+    }
+  
+    const response = await openai.createImage(createImageRequest)
+  
+    return response.data.data
+  } catch (error) {
+    //console.log(error)
+    throw error
   }
-
-  const response = await openai.createImage(createImageRequest)
-
-  return response.data.data
+ 
 }
 
 

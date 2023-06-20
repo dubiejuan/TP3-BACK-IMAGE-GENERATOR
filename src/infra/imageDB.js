@@ -12,7 +12,15 @@ let temporaryImages = [{
   original: true,
   imagePrompt: 'Luffy de la serie de One Piece saltando un barco the barba negra en oro',
   userId: 'IGkLZ0muQ9YurFyosONFkyJpqM93'
-}];
+},
+{
+  id: "1827e5c2419f4a4dabdd26c2a04fe18f",
+  url: "/IGkLZ0muQ9YurFyosONFkyJpqM93/temporary/1827e5c2419f4a4dabdd26c2a04fe18f.png",
+  original: false,
+  imagePrompt: "Luffy de la serie de One Piece saltando un barco the barba negra en oro",
+  userId: "IGkLZ0muQ9YurFyosONFkyJpqM93"
+}
+];
 
 const createImage = ({ id, url, original, imagePrompt, userId }) => {
   let newImage = {

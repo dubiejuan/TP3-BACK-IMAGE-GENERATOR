@@ -3,22 +3,23 @@ const { generateUUID } = require('../libs/generateUUID')
 const { createTemporaryImage,getTemporaryImages,getTemporaryImage} = require('../infra/imageDB')
 const {putObjectToS3,getObjectS3 } = require('../infra/S3')
 
-const generateNewVariant = async ({ id }) => {
+
+const generateNewVariant = async ({ id,userId }) => {
 
 
   const tempImage = getTemporaryImage({id})
 
-  const data = await getObjectS3({url :tempImage[0].url})
+  const s3Image = await getObjectS3({url :tempImage[0].url})
 
+  let image = await gpt.generateVariant({ s3Image})
 
-  let image = await gpt.generateVariant({ imagePNG:data })
 
   const imageGenerated = {
     id: generateUUID(),
     url: "",
     original: false,
     userId,
-    imagePrompt,
+    imagePrompt:tempImage[0].imagePrompt,
     b64: image[0].b64_json
   }
 

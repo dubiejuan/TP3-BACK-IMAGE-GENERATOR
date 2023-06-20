@@ -123,7 +123,9 @@ const variantImageController = async (req, res, next) => {
 
     assert(req.body.id, createError.BadRequest(`Missing id in params`));
 
-    const result = await generateNewVariant({ id: req.body.id });
+    const userId = req.userId;
+    
+    const result = await generateNewVariant({ id: req.body.id,userId });
     res.status(200).json(result);
   } catch (error) {
     next(error);

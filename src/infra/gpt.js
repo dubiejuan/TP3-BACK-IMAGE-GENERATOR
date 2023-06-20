@@ -1,4 +1,7 @@
 require('dotenv').config()
+const fs = require('fs');
+const {generateUUID} =  require('../libs/generateUUID')
+
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -31,18 +34,32 @@ const generateImage = async ({ imagePrompt }) => {
 }
 
 
-const generateVariant = async ({ imagePNG }) => {
+const generateVariant = async ({ s3Image }) => {
 
-  const createImageRequest = {
-    "image": imagePNG,
-    "n": 1,
-    "size": "256x256",
-    "response_format": "b64_json"
+  try {
+
+    const name = generateUUID();
+
+    fs.writeFileSync(`img/${name}.png`, s3Image.Body);
+  
+    const response = await openai.createImageVariation(
+      fs.createReadStream(`img/${name}.png`),
+      1,
+      "256x256",
+      "b64_json"
+    );
+
+    fs.unlinkSync(`img/${name}.png`);
+
+    return response.data.data
+
+
+  } catch (error) {
+    console.log(error)
+    throw error;
+
   }
-
-  const response = await openai.createImageVariation(createImageRequest)
-
-  return response.data.data
+   
 }
 
 

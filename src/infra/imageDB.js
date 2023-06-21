@@ -3,8 +3,15 @@ let images = [{
   url: '/IGkLZ0muQ9YurFyosONFkyJpqM93/permanent/917bf5c29c6f42c088aac1604365d3a6.png',
   original: true,
   imagePrompt: 'Luffy de la serie de One Piece saltando un barco the barba negra en oro',
-  userId: 'IGkLZ0muQ9YurFyosONFkyJpqM93'
-}];
+  userId: 'IGkLZ0muQ9YurFyosONFkyJpqM93',
+},
+  {
+    id: '917bf5c29c6f42c088aac1604365d3a6',
+    url: '/IGkLZ0muQ9YurFyosONFkyJpqM93/permanent/1827e5c2419f4a4dabdd26c2a04fe18f.png',
+    original: true,
+    imagePrompt: 'Luffy de la serie de One Piece saltando y un barco',
+    userId: 'IGkLZ0muQ9YurFyosONFkyJpqM93'
+  }];
 
 let temporaryImages = [{
   id: '917bf5c29c6f42c088aac1604365d3a6',

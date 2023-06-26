@@ -1,16 +1,23 @@
-const { createImage,readTemporaryImage,getImages } = require('../infra/imageDB')
-const {moveObject } = require('../infra/S3')
+const { createImage, readTemporaryImage, getImages, deleteAllTemporaryImages } = require('../infra/imageDB')
+const { moveObject } = require('../infra/S3')
 
-const saveImage = async ({ id,userId }) => {
+const saveImage = async ({ id, userId }) => {
 
-  const image = readTemporaryImage({id})
-   
-  savedImage = await moveObject({image})
+  try {
+    const image = readTemporaryImage({ id })
 
-  createImage(savedImage)
+    savedImage = await moveObject({ image })
 
-  console.log(getImages({userId}))
+    createImage(savedImage)
+
+    deleteAllTemporaryImages({ userId })
+
+    console.log(getImages({ userId }))
+  } catch (error) {
+    throw error;
+  }
+
 }
 
 
-module.exports = {saveImage}
+module.exports = { saveImage }

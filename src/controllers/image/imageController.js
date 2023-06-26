@@ -1,9 +1,9 @@
 const assert = require('assert');
 const createError = require('http-errors');
-const {generateImage} = require('../../domain/generateImage');
-const {saveImage} = require('../../domain/saveImage');
-const {getAllImage} = require('../../domain/getImages');
-const {generateNewVariant} = require('../../domain/generateVariant');
+const { generateImage } = require('../../domain/generateImage');
+const { saveImage } = require('../../domain/saveImage');
+const { getAllImage } = require('../../domain/getImages');
+const { generateNewVariant } = require('../../domain/generateVariant');
 /**
  * @api {get} /:userId
  * @apiGroup  image
@@ -60,8 +60,8 @@ const generateImageController = async (req, res, next) => {
   try {
     assert(req.body?.imagePrompt, createError.BadRequest(`Missing prompt in body`));
 
-    const result = await generateImage({ imagePrompt:req.body.imagePrompt,userId:req.userId });
-    
+    const result = await generateImage({ imagePrompt: req.body.imagePrompt, userId: req.userId });
+
     res.status(200).json(result);
   } catch (error) {
     next(error);
@@ -90,7 +90,7 @@ const saveImageController = async (req, res, next) => {
   try {
     assert(req.body?.id, createError.BadRequest(`Missing id in body`));
     const userId = req.userId;
-    await saveImage({ id:req.body?.id , userId });
+    await saveImage({ id: req.body?.id, userId });
     res.status(200).json({});
   } catch (error) {
     next(error);
@@ -124,8 +124,8 @@ const variantImageController = async (req, res, next) => {
     assert(req.body.id, createError.BadRequest(`Missing id in params`));
 
     const userId = req.userId;
-    
-    const result = await generateNewVariant({ id: req.body.id,userId });
+
+    const result = await generateNewVariant({ id: req.body.id, userId });
     res.status(200).json(result);
   } catch (error) {
     next(error);

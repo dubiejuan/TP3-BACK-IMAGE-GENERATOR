@@ -3,24 +3,37 @@ let images = [{
   url: '/IGkLZ0muQ9YurFyosONFkyJpqM93/permanent/917bf5c29c6f42c088aac1604365d3a6.png',
   original: true,
   imagePrompt: 'Luffy de la serie de One Piece saltando un barco the barba negra en oro',
-  userId: 'IGkLZ0muQ9YurFyosONFkyJpqM93'
-}];
+  userId: 'IGkLZ0muQ9YurFyosONFkyJpqM93',
 
-let temporaryImages = [{
-  id: '917bf5c29c6f42c088aac1604365d3a6',
-  url: '/IGkLZ0muQ9YurFyosONFkyJpqM93/temporary/917bf5c29c6f42c088aac1604365d3a6.png',
-  original: true,
-  imagePrompt: 'Luffy de la serie de One Piece saltando un barco the barba negra en oro',
-  userId: 'IGkLZ0muQ9YurFyosONFkyJpqM93'
 },
 {
   id: "1827e5c2419f4a4dabdd26c2a04fe18f",
   url: "/IGkLZ0muQ9YurFyosONFkyJpqM93/temporary/1827e5c2419f4a4dabdd26c2a04fe18f.png",
   original: false,
-  imagePrompt: "Luffy de la serie de One Piece saltando un barco the barba negra en oro",
+  imagePrompt: "Luffy de la serie de One Piece saltando un barco ",
   userId: "IGkLZ0muQ9YurFyosONFkyJpqM93"
 }
+
 ];
+
+let temporaryImages = [];
+
+// let temporaryImages = [
+//   {
+//     id: '917bf5c29c6f42c088aac1604365d3a6',
+//     url: '/IGkLZ0muQ9YurFyosONFkyJpqM93/temporary/917bf5c29c6f42c088aac1604365d3a6.png',
+//     original: true,
+//     imagePrompt: 'Luffy de la serie de One Piece saltando un barco the barba negra en oro',
+//     userId: 'IGkLZ0muQ9YurFyosONFkyJpqM93'
+//   },
+//   {
+//     id: "1827e5c2419f4a4dabdd26c2a04fe18f",
+//     url: "/IGkLZ0muQ9YurFyosONFkyJpqM93/temporary/1827e5c2419f4a4dabdd26c2a04fe18f.png",
+//     original: false,
+//     imagePrompt: "Luffy de la serie de One Piece saltando un barco the barba negra en oro",
+//     userId: "IGkLZ0muQ9YurFyosONFkyJpqM93"
+//   }
+// ];
 
 const createImage = ({ id, url, original, imagePrompt, userId }) => {
   let newImage = {
@@ -46,7 +59,7 @@ const deleteImage = ({ id }) => {
 }
 
 const createTemporaryImage = ({ id, url, original, imagePrompt, userId }) => {
-    let newImage = {
+  let newImage = {
     id, url, original, imagePrompt, userId
   };
   temporaryImages.push(newImage);
@@ -54,11 +67,11 @@ const createTemporaryImage = ({ id, url, original, imagePrompt, userId }) => {
 }
 
 const getTemporaryImages = ({ userId }) => {
-  return temporaryImages.filter(image => image.userId == userId) 
+  return temporaryImages.filter(image => image.userId == userId)
 }
 
 const getTemporaryImage = ({ id }) => {
-  return temporaryImages.filter(image => image.id == id) 
+  return temporaryImages.filter(image => image.id == id)
 }
 
 
@@ -74,4 +87,4 @@ const deleteAllTemporaryImages = ({ userId }) => {
   temporaryImages = temporaryImages.filter(image => image.userId !== userId);
 }
 
-module.exports = { getTemporaryImage,getTemporaryImages, getImages, createImage, readImage, readTemporaryImage, deleteAllTemporaryImages, deleteImage, createTemporaryImage }
+module.exports = { getTemporaryImage, getTemporaryImages, getImages, createImage, readImage, readTemporaryImage, deleteAllTemporaryImages, deleteImage, createTemporaryImage }
